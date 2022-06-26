@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bookshelf Apps</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css"
+    />
+    <link rel="stylesheet" href="./css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./css/app.css" />
+  </head>
+  <body>
+    <nav class="navbar navbar-dark bg-primary">
+      <div class="container">
+        <p class="navbar-brand mb-0 fw-bold fs-3 text-uppercase mx-auto">
+          Bookshelf Apps
+        </p>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="row mt-4">
+        <div class="col-md-6">
+          <div class="card text-dark shadow border-dark bg-light mb-4">
+            <div class="card-header bg-transparent">
+              <p class="text-capitalize fw-bold fs-5 text-center mb-0">
+                Masukkan buku baru
+              </p>
+            </div>
+            <div class="card-body">
+              <form action="#" class="p-2" id="formAddBook">
+                <div class="mb-3">
+                  <label for="inputTitle" class="form-label">Judul</label>
+                  <input
+                    type="text"
+                    class="form-control border-primary"
+                    id="inputTitle"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="inputAuthor" class="form-label">Penulis</label>
+                  <input
+                    type="text"
+                    class="form-control border-primary"
+                    id="inputAuthor"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="inputYear" class="form-label">Tahun</label>
+                  <input
+                    type="number"
+                    class="form-control border-primary"
+                    id="inputYear"
+                    required
+                  />
+                </div>
+                <div class="d-flex justify-content-end">
+                  <button type="submit" class="btn btn-primary">
+                    Tambahkan Buku
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="card text-dark shadow border-dark bg-light mb-4">
+            <div class="card-header bg-transparent">
+              <p class="text-capitalize fw-bold fs-5 text-center mb-0">
+                Cari buku
+              </p>
+            </div>
+            <div class="card-body">
+              <div class="input-group">
+                <input
+                  type="search"
+                  class="form-control border-primary border-end-0"
+                  id="searchTitle"
+                  placeholder="Cari judul, penulis, atau tahun buku..."
+                />
+                <div class="input-group-postpend">
+                  <span
+                    class="input-group-text border-primary bg-white border-start-0 rounded-0 rounded-end"
+                  >
+                    <i class="bi bi-search"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card text-dark shadow border-dark bg-light mb-4">
+            <div class="card-header bg-transparent">
+              <p class="text-capitalize fw-bold fs-5 text-center mb-0">
+                Belum selesai dibaca
+              </p>
+            </div>
+            <div class="card-body" id="unreadBooks"></div>
+          </div>
+
+          <div class="card text-dark shadow border-dark bg-light mb-4">
+            <div class="card-header bg-transparent">
+              <p class="text-capitalize fw-bold fs-5 text-center mb-0">
+                Selesai dibaca
+              </p>
+            </div>
+            <div class="card-body" id="finishedReading"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" tabindex="-1" id="editModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit Buku</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form action="#" class="p-2" id="formEditBook">
+              <div class="mb-3">
+                <label for="editTitle" class="form-label">Judul</label>
+                <input
+                  type="text"
+                  class="form-control border-primary"
+                  id="editTitle"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="editAuthor" class="form-label">Penulis</label>
+                <input
+                  type="text"
+                  class="form-control border-primary"
+                  id="editAuthor"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="editYear" class="form-label">Tahun</label>
+                <input
+                  type="number"
+                  class="form-control border-primary"
+                  id="editYear"
+                  required
+                />
+              </div>
+              <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary">Edit Buku</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="./js/bootstrap.bundle.min.js"></script>
+    <script src="./js/main.js"></script>
+    <script src="./js/storage.js"></script>
+  </body>
+</html>

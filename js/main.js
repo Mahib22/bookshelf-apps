@@ -1,4 +1,6 @@
-const books = [];
+let books = [];
+let formMode = 'CREATE';
+let bookIdToEdit = '';
 const RENDER_EVENT = 'render-book';
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -6,7 +8,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
   submitForm.addEventListener('submit', function (event) {
     event.preventDefault();
-    addBook();
+    
+    if (formMode === 'UPDATE') {
+      editBook(bookIdToEdit);
+    } else {
+      addBook();
+    }
+
     submitForm.reset();
   });
 
@@ -38,10 +46,16 @@ function confirmDeleteBook(bookData){
   })
 }
 
-function addBook() {
+function getFormData() {
   const titleBook = document.getElementById('inputTitle').value;
   const authorBook = document.getElementById('inputAuthor').value;
   const yearBook = document.getElementById('inputYear').value;
+ 
+  return { titleBook, authorBook, yearBook };
+}
+
+function addBook() {
+  const { titleBook, authorBook, yearBook } = getFormData();
   
   const generatedID = generateId();
   const bookObject = generateBookObject(generatedID, titleBook, authorBook, yearBook, false);
@@ -134,7 +148,8 @@ function makeBookList(bookObject){
   penButton.innerHTML = '<i class="bi bi-pencil text-info"></i>';
 
   penButton.addEventListener('click', function () {
-    detailBook(bookObject);
+    event.stopPropagation();
+    setFormFieldToUpdate(bookObject);
   });
 
   buttonSection.append(penButton);
@@ -203,37 +218,37 @@ function findBookIndex(bookId) {
   return -1;
 }
 
-const newTitle = document.getElementById('editTitle');
-const newAuthor = document.getElementById('editAuthor');
-const newYear = document.getElementById('editYear');
-const editForm = document.getElementById('formEditBook');
-const editModal = new bootstrap.Modal(document.getElementById('editModal'), {
-  keyboard: false
-});
-
-function detailBook(bookObject){
-  editModal.show();
-
-  newTitle.value = bookObject.title;
-  newAuthor.value = bookObject.author;
-  newYear.value = bookObject.year;
-
-  editForm.addEventListener('submit', function (event) {
-    event.preventDefault();
-    editBook(bookObject.id);
-  });
+function setFormFieldToUpdate(bookObject) {
+  const inputTitle = document.getElementById('inputTitle');
+  inputTitle.value = bookObject.title;
+ 
+  const inputAuthor = document.getElementById('inputAuthor');
+  inputAuthor.value = bookObject.author;
+ 
+  const inputYear = document.getElementById('inputYear');
+  inputYear.value = bookObject.year;
+ 
+  formMode = 'UPDATE';
+  bookIdToEdit = bookObject.id;
 }
-
-function editBook(bookId){
-  const bookIndex = books.findIndex((item => item.id === bookId));
-  
-  books[bookIndex].title = newTitle.value;
-  books[bookIndex].author = newAuthor.value;
-  books[bookIndex].year = newYear.value;
-
-  editModal.hide();
+ 
+function editBook(bookId) {
+  const bookIndex = books.findIndex((item) => item.id === bookId);
+ 
+  if (bookIndex === -1) return null;
+ 
+  const { titleBook, authorBook, yearBook } = getFormData();
+ 
+  books[bookIndex].title = titleBook;
+  books[bookIndex].author = authorBook;
+  books[bookIndex].year = yearBook;
+ 
   showAlert('Buku berhasil diedit', 'success');
   document.dispatchEvent(new Event(RENDER_EVENT));
+
+  formMode = 'CREATE';
+  bookIdToEdit = '';
+
   saveData();
 }
 
